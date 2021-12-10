@@ -1,1 +1,133 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css';
+@import 'https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css';
+
+/* nav-bar*/
+.navbar .dropdown-toggle, .navbar .dropdown-menu a {
+  cursor: pointer;
+}
+
+.navbar .dropdown-item.active, .navbar .dropdown-item:active {
+  color: inherit;
+  text-decoration: none;
+  background-color: inherit;
+}
+
+.navbar .dropdown-item:focus, .navbar .dropdown-item:hover {
+  color: #16181b;
+  text-decoration: none;
+  background-color: #f8f9fa;
+}
+
+@media (min-width: 767px) {
+  .navbar .dropdown-toggle:not(.nav-link)::after {
+      display: inline-block;
+      width: 0;
+      height: 0;
+      margin-left: .5em;
+      vertical-align: 0;
+      border-bottom: .3em solid transparent;
+      border-top: .3em solid transparent;
+      border-left: .3em solid;
+  }
+}
+
+/* products */
+
+                    
+.wp-block {
+  margin: 0 0 15px 0;
+  padding:15px;
+  -webkit-transition: all .3s linear;
+  transition: all .3s linear;
+  position: relative;
+  cursor: default;
+  border-radius: 2px;
+}
+
+.wp-block.product {
+  background: #fff;
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid #e0eded;
+}
+
+.wp-block:before, .wp-block:after {
+  display: table;
+  content: "";
+}
+
+.wp-block.product figure {
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e0eded;
+}
+
+.img-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.wp-block.product .product-title {
+  margin: 10px 0 0 0;
+  padding: 0;
+  border-bottom: 0;
+}
+
+h2 {
+  font-size: 25px;
+}
+
+.wp-block.product .product-title a {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.wp-block.product p {
+  color: #616161;
+}
+
+.wp-block.product .wp-block-footer {
+  border-top: 1px solid #e0eded;
+  padding-top: 15px;
+  padding-bottom:25px;
+}
+
+.wp-block.product .price {
+  padding: 4px 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+}
+
+.btn-base {
+  color: #fff !important;
+  background-color: #3498db;
+  border: 1px solid;
+  border-color: #258cd1;
+}
+
+.btn-icon {
+  position: relative;
+}
+
+.btn-icon.btn-sm span, .btn-icon.btn-sm input {
+  padding-left: 35px;
+}
+
+.btn {
+    border-radius: 0;
+    border: 0;
+    border-bottom: 4px solid #CCCCCC;
+    margin:0;
+    -webkit-box-shadow: 0 5px 5px -6px rgba(0,0,0,.3);
+       -moz-box-shadow: 0 5px 5px -6px rgba(0,0,0,.3);
+            box-shadow: 0 5px 5px -6px rgba(0,0,0,.3);
+}
+
+.btn-info {
+    background-color: #39b3d7;
+    border-color: #348fd2;
+    text-shadow: 1px 1px 0 #238ed5;
+}                
