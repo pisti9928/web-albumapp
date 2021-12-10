@@ -7,21 +7,23 @@
   <div class="collapse navbar-collapse" id="navbarCollapse">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Add album <span class="sr-only">(current)</span></a>
+        <a class="nav-link" (click)="onOpenModalAdd()" href="#">Album hozzáadása <span
+            class="sr-only">(current)</span></a>
       </li>
     </ul>
     <form class="form-inline mt-2 mt-md-0">
-      <input class="form-control mr-sm-2" type="text" placeholder="Search for album..." aria-label="Search">
+      <input (ngModelChange)="searchAlbums(key.value)" #key="ngModel" ngModel name="key" class="form-control mr-sm-2"
+        type="search" placeholder="Album keresése..." aria-label="Search">
     </form>
   </div>
 </div>
 
 <main role="main" class="container">
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-  <div class="container bootstrap snippets bootdey">
+  <div class="container" id="main-container">
     <div class="row">
 
-      <!-- foreach     --> 
+      <!-- foreach     -->
       <div *ngFor="let album of albums" class="col-md-4 col-sm-6 col-xs-12">
         <div class="wp-block product">
           <h2 class="product-title"><a href="">{{album?.artist}} - {{album?.title}}</a></h2>
@@ -37,15 +39,151 @@
 
           <div class="wp-block-footer">
             <div class="float-right btn-group btn-group-sm">
-              <a href="#" class="btn btn-primary tooltips" data-placement="top" data-toggle="tooltip"
-                data-original-title="Edit"><i class="fa fa-pencil"></i> </a>
-              <a href="#" class="btn btn-secondary tooltips" data-placement="top" data-toggle="tooltip"
-                data-original-title="Delete"><i class="fa fa-times"></i></a>
+              <a href="#" (click)="onOpenModal(album, 'edit')" class="btn btn-primary tooltips" data-placement="top"
+                data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil"></i> </a>
+              <a href="#" (click)="onOpenModal(album, 'delete')" class="btn btn-secondary tooltips" data-placement="top"
+                data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-times"></i></a>
             </div>
           </div>
         </div>
       </div>
 
     </div>
+
+    <!-- Add Album Modal -->
+    <div class="modal fade" id="addAlbumModal" tabindex="-1" role="dialog" aria-labelledby="addAlbumModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addAlbumModalLabel">Album hozzáadása</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form #addForm="ngForm" (ngSubmit)="onAddAlbum(addForm)">
+              <div class="form-group">
+                <label for="artist">Előadó</label>
+                <input type="text" ngModel name="artist" class="form-control" id="artist" placeholder="Előadó" required>
+              </div>
+              <div class="form-group">
+                <label for="title">Cím</label>
+                <input type="text" ngModel name="title" class="form-control" id="title" placeholder="Cím" required>
+              </div>
+              <div class="form-group">
+                <label for="releaseDate">Megjelenés</label>
+                <input type="text" ngModel name="releaseDate" class="form-control" id="releaseDate"
+                  placeholder="Megjelenés" required>
+              </div>
+              <div class="form-group">
+                <label for="genre">Műfaj</label>
+                <input type="text" ngModel name="genre" class="form-control" id="genre" placeholder="Műfaj" required>
+              </div>
+              <div class="form-group">
+                <label for="rating">Értékelés</label>
+                <input type="text" ngModel name="rating" class="form-control" id="rating" placeholder="Értékelés"
+                  required>
+              </div>
+              <div class="modal-footer">
+                <button type="button" id="add-album-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary">Album hozzáadása</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <!-- Edit Modal -->
+    <div class="modal fade" id="updateAlbumModal" tabindex="-1" role="dialog" aria-labelledby="albumEditModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="updateAlbumModalLabel">Album szerkesztése {{editAlbum?.title}}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form #editForm="ngForm" (ngSubmit)="onUpdateAlbum(editAlbum)">
+              <div class="form-group">
+                <label for="artist">Előadó</label>
+                <input type="text" ngModel="{{editAlbum?.artist}}" name="artist" class="form-control" id="artist"
+                  placeholder="Előadó">
+              </div>
+              <div class="form-group">
+                <label for="title">Cím</label>
+                <input type="text" ngModel="{{editAlbum?.title}}" name="title" class="form-control" id="title"
+                  placeholder="Cím">
+              </div>
+              <div class="form-group">
+                <label for="releaseDate">Megjelenés</label>
+                <input type="text" ngModel="{{editAlbum?.releaseDate}}" name="releaseDate" class="form-control"
+                  id="releaseDate" placeholder="Megjelenés">
+              </div>
+              <div class="form-group">
+                <label for="genre">Műfaj</label>
+                <input type="text" ngModel="{{editAlbum?.genre}}" name="genre" class="form-control" id="genre"
+                  placeholder="Műfaj">
+              </div>
+              <div class="form-group">
+                <label for="rating">Értékelés</label>
+                <input type="text" ngModel="{{editAlbum?.rating}}" name="rating" class="form-control" id="rating"
+                  placeholder="Értékelés">
+              </div>
+
+
+              <input type="hidden" ngModel="{{editAlbum?.id}}" name="id" class="form-control" id="id">
+
+              <div class="modal-footer">
+                <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>
+                <button (click)="onUpdateAlbum(editForm.value)" data-dismiss="modal" class="btn btn-primary">Módosítások
+                  mentése</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Delete Modal -->
+    <div class="modal fade" id="deleteAlbumModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteModalLabel">Album törlése</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Biztos ki akarod törölni ezt az albumot ({{deleteAlbum?.title}})?</p>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+              <button (click)="onDeleteAlbum(deleteAlbum.id)" class="btn btn-danger" data-dismiss="modal">Yes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
   </div>
 </main>
+
+<!-- Notification for no albums -->
+<div *ngIf="albums?.length == 0" class="col-lg-12 col-md-12 col-xl-12">
+  <div class="alert alert-info" role="alert">
+    <h4 class="alert-heading">Nincsenek Albumok!</h4>
+    <p>Nem találhatóak albumok.</p>
+  </div>
+</div>

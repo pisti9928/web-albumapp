@@ -80,8 +80,8 @@ public searchAlbums(key: string): void {
       if(album.artist.toLowerCase().indexOf(key.toLowerCase()) !== -1 ||
       album.title.toLowerCase().indexOf(key.toLowerCase()) !== -1 ||
       album.releaseDate.toLowerCase().indexOf(key.toLowerCase()) !== -1 ||
-      album.genre.toLowerCase().indexOf(key.toLowerCase()) !== -1 ||
-      album.rating.toLowerCase().indexOf(key.toLowerCase()) !== -1){
+      album.genre.toLowerCase().indexOf(key.toLowerCase()) !== -1 )
+      {
         results.push(album);
       }  
     }
